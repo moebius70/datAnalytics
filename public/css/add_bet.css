@@ -1,0 +1,43 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+.form-container {
+    max-width: 700px;
+    margin: 0 auto;
+}
+h1 {
+    text-align: center;
+}
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+}
+.form-grid label {
+    margin-bottom: 5px;
+}
+.form-grid input, .form-grid select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.form-grid input[type="number"] {
+    max-width: 100px;
+}
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #45a049;
+}
+.form-actions {
+    text-align: center;
+}

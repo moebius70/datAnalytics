@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Bets</title>
+
+    <!-- Google Font for a cleaner look -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/public/css/display_bets.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Display Bets</h1>
+
+        <form method="GET" action="/Dashboard/display_bets">
+            <!-- Search Form with grouped form fields -->
+            <div class="form-group">
+                <label for="race_date">Race Date:</label>
+                <input type="date" id="race_date" name="race_date">
+            </div>
+            <div class="form-group">
+                <label for="racetrack">Racetrack:</label>
+                <input type="text" id="racetrack" name="racetrack">
+            </div>
+            <div class="form-group">
+                <label for="horse_name">Horse Name:</label>
+                <input type="text" id="horse_name" name="horse_name">
+            </div>
+
+            <div class="form-group">
+                <label for="race_time">Race Time:</label>
+                <input type="time" id="race_time" name="race_time">
+            </div>
+            <div class="form-group">
+                <label for="distance">Distance:</label>
+                <input type="number" id="distance" name="distance">
+            </div>
+            <div class="form-group">
+                <label for="jockey">Jockey:</label>
+                <input type="text" id="jockey" name="jockey">
+            </div>
+
+            <div class="form-group">
+                <label for="odds">Odds:</label>
+                <input type="text" id="odds" name="odds">
+            </div>
+            <div class="form-group">
+                <label for="status">Bet Status:</label>
+                <input type="text" id="status" name="status">
+            </div>
+            <div class="form-group">
+                <label for="betfair_betID">Betfair Bet ID:</label>
+                <input type="text" id="betfair_betID" name="betfair_betID">
+            </div>
+
+            <div class="form-group">
+                <label for="bet_matched">Bet Matched:</label>
+                <select id="bet_matched" name="bet_matched">
+                    <option value="">--Select--</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="points">Points:</label>
+                <input type="number" id="points" name="points" min="1" max="1000">
+            </div>
+
+            <!-- Search and Add New Bet Buttons in the same row -->
+            <div class="buttons-group">
+                <button type="submit">Search</button>
+                <button type="button" class="action-button" onclick="openAddBetWindow()">Add New Bet</button>
+            </div>
+        </form>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Race Date</th>
+                    <th>Racetrack</th>
+                    <th>Horse Name</th>
+                    <th>Race Time</th>
+                    <th>Distance</th>
+                    <th>Jockey</th>
+                    <th>Odds</th>
+                    <th>Status</th>
+                    <th>Betfair Bet ID</th>
+                    <th>Bet Matched</th>
+                    <th>Points</th>
+                    <th colspan="2">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (!empty($bets)): ?>
+                    <?php foreach ($bets as $bet): ?>
+                        <tr>
+                            <form method="POST" action="/Dashboard/update_bet">
+                                <td><?= isset($bet['race_date']) ? htmlspecialchars($bet['race_date'], ENT_QUOTES, 'UTF-8') : '' ?></td>
+                                <td><?= isset($bet['racetrack']) ? htmlspecialchars($bet['racetrack'], ENT_QUOTES, 'UTF-8') : '' ?></td>
+                                <td><?= isset($bet['horse_name']) ? htmlspecialchars($bet['horse_name'], ENT_QUOTES, 'UTF-8') : '' ?></td>
+                                <td><?= isset($bet['race_time']) ? htmlspecialchars($bet['race_time'], ENT_QUOTES, 'UTF-8') : '' ?></td>
+                                <td><?= isset($bet['distance']) ? htmlspecialchars($bet['distance'], ENT_QUOTES, 'UTF-8') : '' ?></td>
+                                <td><?= isset($bet['jockey']) ? htmlspecialchars($bet['jockey'], ENT_QUOTES, 'UTF-8') : '' ?></td>
+                                <td><?= isset($bet['odds']) ? htmlspecialchars($bet['odds'], ENT_QUOTES, 'UTF-8') : '' ?></td>
+                                <td><?= isset($bet['status']) ? htmlspecialchars($bet['status'], ENT_QUOTES, 'UTF-8') : '' ?></td>
+                                <td><?= isset($bet['betfair_betID']) ? htmlspecialchars($bet['betfair_betID'], ENT_QUOTES, 'UTF-8') : '' ?></td>
+                                <td><?= isset($bet['bet_matched']) && $bet['bet_matched'] == 1 ? 'Yes' : 'No' ?></td>
+                                <td><?= isset($bet['points']) ? htmlspecialchars($bet['points'], ENT_QUOTES, 'UTF-8') : '' ?></td>                                                                
+                                <td>
+                                    <button type="button" class="edit-button">Edit</button>
+                                    <button type="submit" class="edit-mode" style="display: none;">Submit</button>
+                                    <input type="hidden" name="bet_id" value="<?= isset($bet['id']) ? htmlspecialchars($bet['id'], ENT_QUOTES, 'UTF-8') : '' ?>">
+                                </td>
+                            </form>
+                            <td>
+                                <form method="POST" action="/Dashboard/delete_bet" onsubmit="return confirm('Are you sure you want to delete this bet?');">
+                                    <input type="hidden" name="id" value="<?= htmlspecialchars($bet['id']) ?>">
+                                    <button type="submit" class="delete-button">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="13">No bets found.</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function openAddBetWindow(betID = '', raceDate = '', racetrack = '', horseName = '', raceTime = '', distance = '', jockey = '', odds = '', status = '', betfairBetID = '', betMatched = '', points = '') {
+            const width = 600;
+            const height = 500;
+            const left = (window.innerWidth - width) / 2;
+            const top = (window.innerHeight - height) / 2;
+    
+            const params = `betID=${betID}&raceDate=${raceDate}&racetrack=${racetrack}&horseName=${horseName}&raceTime=${raceTime}&distance=${distance}&jockey=${jockey}&odds=${odds}&status=${status}&betfairBetID=${betfairBetID}&betMatched=${betMatched}&points=${points}`;
+            
+            window.open(`/Dashboard/get_bet_data?${params}`, 'Add Bet', `width=${width},height=${height},top=${top},left=${left}`);
+        }
+    
+        document.querySelectorAll('.edit-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const row = this.closest('tr');
+                
+                const betID = row.querySelector('input[name="bet_id"]').value;
+                const raceDate = row.children[1].textContent.trim();
+                const racetrack = row.children[2].textContent.trim();
+                const horseName = row.children[3].textContent.trim();
+                const raceTime = row.children[4].textContent.trim();
+                const distance = row.children[5].textContent.trim();
+                const jockey = row.children[6].textContent.trim();
+                const odds = row.children[7].textContent.trim();
+                const status = row.children[8].textContent.trim();
+                const betfairBetID = row.children[9].textContent.trim();
+                const betMatched = row.children[10].textContent.trim();
+                const points = row.children[11].textContent.trim();
+    
+                openAddBetWindow(betID, raceDate, racetrack, horseName, raceTime, distance, jockey, odds, status, betfairBetID, betMatched, points);
+            });
+        });
+    </script>
+    
+</body>
+</html>

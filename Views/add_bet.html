@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Bet</title>
+    <link rel="stylesheet" href="/public/css/add_bet.css">
+</head>
+<body>
+    <div class="form-container">
+        <h1>Add Bet</h1>  <!-- action="/Dashboard/add_bet" -->
+        <form id="betForm" method="POST" class="form-grid">
+            <label for="race_date">Race Date:</label>
+            <input type="date" id="race_date" name="race_date" required>
+
+            <label for="racetrack">Racetrack:</label>
+            <input type="text" id="racetrack" name="racetrack" required>
+
+            <label for="horse_name">Horse Name:</label>
+            <input type="text" id="horse_name" name="horse_name" required>
+
+            <label for="race_time">Race Time:</label>
+            <input type="time" id="race_time" name="race_time" required>
+
+            <label for="distance">Distance (in meters):</label>
+            <input type="number" id="distance" name="distance" min="100" max="5000" required>
+
+            <label for="jockey">Jockey:</label>
+            <input type="text" id="jockey" name="jockey" required>
+
+            <label for="odds">Odds:</label>
+            <input type="text" id="odds" name="odds" required>
+
+            <label for="status">Bet Status:</label>
+            <input type="text" id="status" name="status" required>
+
+            <label for="betfair_betID">Betfair Bet ID:</label>
+            <input type="text" id="betfair_betID" name="betfair_betID" required>
+
+            <label for="bet_matched">Bet Matched:</label>
+            <select id="bet_matched" name="bet_matched" required>
+                <option value="">--Select--</option>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
+
+            <label for="points">Points:</label>
+            <input type="number" id="points" name="points" min="1" max="1000" required>
+            <input type="hidden" id="betID" name="betID">
+            <div class="form-actions">
+                <button type="submit" id="submitButton">Add Bet</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+    // Adjust window size to fit the form
+    window.onload = function() {
+        window.resizeTo(800, 600);
+    };
+
+    // Function to get query parameters from the URL
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param) || '';
+    }
+
+    // Prefill the form fields with the query parameter values
+    document.getElementById('race_date').value = getQueryParam('raceDate');
+    document.getElementById('racetrack').value = getQueryParam('racetrack');
+    document.getElementById('horse_name').value = getQueryParam('horseName');
+    document.getElementById('race_time').value = getQueryParam('raceTime');
+    document.getElementById('distance').value = getQueryParam('distance');
+    document.getElementById('jockey').value = getQueryParam('jockey');
+    document.getElementById('odds').value = getQueryParam('odds');
+    document.getElementById('status').value = getQueryParam('status');
+    document.getElementById('betfair_betID').value = getQueryParam('betfairBetID');
+    document.getElementById('bet_matched').value = getQueryParam('betMatched');
+    document.getElementById('points').value = getQueryParam('points');
+    document.getElementById('betID').value = getQueryParam('betID'); // Hidden input for betID
+
+    // Get betID from query parameters
+    const betID = getQueryParam('betID');
+
+    // Change the submit button text to "Update" if editing
+    if (betID) {
+        document.getElementById('submitButton').innerText = 'Update';
+        document.getElementById('betForm').action = '/Dashboard/update_bet'; // URL to handle updating the bet
+    }else {
+        document.getElementById('betForm').action = '/Dashboard/add_bet'; // URL to handle adding a new bet
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,151 @@
+        /* Global Styling */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        /* Container Styling */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        /* Form Styling */
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            width: calc(33% - 10px); /* Allows for three form groups per row */
+            margin-bottom: 5px;
+        }
+
+        label {
+            flex: 0 0 120px; /* Label width */
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        input[type="text"], input[type="date"], input[type="time"], input[type="number"], select {
+            padding: 6px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        button[type="submit"], .action-button {
+            padding: 8px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        button[type="submit"]:hover, .action-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Link styling */
+        a {
+            display: inline-block;
+            margin-bottom: 10px;
+            color: #007BFF;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 8px 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Button styling */
+        .edit-button, .delete-button {
+            padding: 6px 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+        }
+
+        .edit-button:hover, .delete-button:hover {
+            background-color: #218838;
+        }
+
+        .delete-button {
+            background-color: #dc3545;
+        }
+
+        .delete-button:hover {
+            background-color: #c82333;
+        }
+
+        /* Buttons Row Styling */
+        .buttons-group {
+            display: flex;
+            justify-content: flex-start;
+            gap: 10px;
+            width: calc(33% - 10px);
+            align-items: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .form-group, .buttons-group {
+                width: 100%; /* Full width on smaller screens */
+            }
+        }
